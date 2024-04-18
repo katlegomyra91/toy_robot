@@ -44,18 +44,18 @@ export default class Robot {
     }
 
     public place(position: string): boolean {
-        const strippedPosition = position.split("PLACE")[1].replace(/[\(\)']+/g, '').trim();
+        const strippedPosition = position.split("PLACE")[1].trim();
         const arrPosition = strippedPosition.split(",", 3);
         if (
             arrPosition.length === 3
             && (arrPosition[0] >= 0 && arrPosition[0] <= this.table.getMaxX())
             && (arrPosition[1] >= 0 && arrPosition[1] <= this.table.getMaxY())
-            && ["NORTH", "WEST", "SOUTH", "EAST"].includes(arrPosition[2])
+            && ["NORTH", "WEST", "SOUTH", "EAST"].includes(arrPosition[2].toUpperCase())
         ) {
             this.position = {
-                x: arrPosition[0],
-                y: arrPosition[1],
-                direction: arrPosition[2]
+                x: +arrPosition[0],
+                y: +arrPosition[1],
+                direction: arrPosition[2].toUpperCase()
             };
             return true;
         }
