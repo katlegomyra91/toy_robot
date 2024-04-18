@@ -1,28 +1,43 @@
+import * as process from 'process';
+import Robot from "./robot";
+import Table from "./table";
+
 export default class Command {
+    private robot: Robot;
+
     public handle(command: string): void {
+        if (!this.robot) {
+            const table = new Table(5, 5);
+            this.robot = new Robot(
+                {
+                    x: 0,
+                    y: 0,
+                    direction: "NORTH"
+                },
+                table
+            );
+        }
+
         switch (command) {
             case "LEFT":
-                console.log('face robot left');
-                break;
             case "RIGHT":
-                console.log('face robot right');
+                this.robot.changeDirection(command);
                 break;
             case "MOVE":
-                console.log('move robot 1 space');
+                if (!this.robot.move()) {
+                    process.stdout.write("Invalid MOVE, cannot MOVE Robot off the table, it will fall :(\n");
+                }
                 break;
             case "REPORT":
-                console.log('report robot position');
+                process.stdout.write(this.robot.toString() + '\n');
                 break;
             default:
-                let falseInput = false;
                 if (command.includes('PLACE')) {
-                    console.log('place robot');
+                    if (!this.robot.place(command)) {
+                        process.stdout.write("Invalid PLACE, cannot PLACE the Robot outside the table\n");
+                    }
                 } else {
-                    falseInput = true;
-                }
-
-                if (falseInput) {
-                    console.log('Invalid input, please use one of the commands: PLACE (0,0,NORTH), LEFT, RIGHT, MOVE, REPORT\n');
+                    process.stdout.write("Invalid input, please use one of the commands: PLACE (0,0,NORTH), LEFT, RIGHT, MOVE, REPORT\n");
                 }
                 break;
         }

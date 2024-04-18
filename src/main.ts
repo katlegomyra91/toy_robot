@@ -16,7 +16,7 @@ const readLine = createInterface(readLineOptions);
 const controller = new Command();
 
 readLine.prompt(true);
-readLine.on('line', (line: string) => {
+readLine.on("line", (line: string) => {
     controller.handle(line.toUpperCase());
     readLine.prompt(true);
 });
