@@ -5,19 +5,19 @@ import Table from "./table";
 export default class Command {
     private robot: Robot;
 
-    public handle(command: string): void {
-        if (!this.robot) {
-            const table = new Table(5, 5);
-            this.robot = new Robot(
-                {
-                    x: 0,
-                    y: 0,
-                    direction: "NORTH"
-                },
-                table
-            );
-        }
+    constructor() {
+        const table = new Table(5, 5);
+        this.robot = new Robot(
+            {
+                x: 0,
+                y: 0,
+                direction: "NORTH"
+            },
+            table
+        );
+    }
 
+    public handle(command: string): void {
         switch (command) {
             case "LEFT":
             case "RIGHT":

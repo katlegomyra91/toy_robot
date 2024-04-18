@@ -48,11 +48,11 @@ export default class Robot {
         const arrPosition = strippedPosition.split(",", 3);
         if (
             arrPosition.length === 3
-            && (arrPosition[0] >= 0 && arrPosition[0] <= this.table.getMaxX())
-            && (arrPosition[1] >= 0 && arrPosition[1] <= this.table.getMaxY())
+            && (+arrPosition[0] >= 0 && +arrPosition[0] <= this.table.getMaxX())
+            && (+arrPosition[1] >= 0 && +arrPosition[1] <= this.table.getMaxY())
             && ["NORTH", "WEST", "SOUTH", "EAST"].includes(arrPosition[2].toUpperCase())
         ) {
-            this.position = {
+            this.position = <IPosition>{
                 x: +arrPosition[0],
                 y: +arrPosition[1],
                 direction: arrPosition[2].toUpperCase()
